@@ -1,0 +1,16 @@
+.blue {
+    height: 125px;
+    width: 5px;
+    background-color:blue;
+  }
+  .purple {
+    height: 125px;
+    width: 5px;
+    background-color:purple;
+  }
+  #myBorder {
+    width: 100%;
+    height: 1100px;
+    border: 50px solid slateblue;
+    border-width: 50px solid;
+  }
