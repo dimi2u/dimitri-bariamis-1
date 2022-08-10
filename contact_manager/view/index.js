@@ -2,24 +2,20 @@ console.log("Welcome to View!");
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-
-
-
+const index = urlParams.get('index');
 const existingContacts = JSON.parse(localStorage.getItem('myContacts'));
 
-let myCards = '';
 
-for (let i = 0; i < existingContacts.length; i++) {
-        myCards += '<tr>';
-        myCards += '<td>' + existingContacts[i].firstName + '</td>';
-        myCards += '<td>' + existingContacts[i].lastName + '</td>';
-        myCards += '<td>' + existingContacts[i].email + '</td>';
-        myCards += '<td>' + existingContacts[i].phoneNumber + '</td>';
-        myCards += '</tr>';
-}
+document.getElementById('firstName').innerHTML = existingContacts[index].firstName;
+document.getElementById('lastName').innerHTML = existingContacts[index].lastName;
+document.getElementById('email').innerHTML = existingContacts[index].email;
+document.getElementById('phoneNumber').innerHTML = existingContacts[index].phoneNumber;
+
+
 console.log(queryString);
 console.log(urlParams);
-console.log(existingContacts)
-console.log(existingContacts[0]);
+console.log(index);
+console.log(existingContacts);
+console.log(existingContacts[index]);
+console.log(existingContacts[index].firstName);
 console.log(JSON.parse(localStorage.getItem('myContacts')));
-document.getElementById("contactCard" + [i]).innerHTML = myCards;
