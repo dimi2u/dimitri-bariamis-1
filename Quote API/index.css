@@ -1,0 +1,13 @@
+body {
+    background-color: skyblue;
+}
+
+.container {
+    background-color: gold;
+    border: 10px solid orange;
+    height: 175px;
+    width: 700px;
+    margin: auto;
+    text-align: center;
+}
+
