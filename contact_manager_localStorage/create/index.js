@@ -31,7 +31,7 @@ const saveContact = function() {
         document.getElementById('email').value = '';
         document.getElementById('phoneNumber').value = '';
 
-        window.location.href = "file:///Users/Dimitri/Documents/GitHub/dimitri-bariamis-1/contact_manager/view_all/index.html";
+        window.location.href = "file:///Users/Dimitri/Documents/GitHub/dimitri-bariamis-1/contact_manager_localStorage/view_all/index.html";
     }  
 }
 

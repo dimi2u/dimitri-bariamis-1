@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoke Endpoint Firebase Function Example</title>
+</head>
+
+<body>
+  <script src="/__/firebase/9.9.3/firebase-app-compat.js"></script>
+  <script src="/__/firebase/9.9.3/firebase-functions-compat.js"></script>
+  <script src="/__/firebase/init.js?useEmulator=true"></script>
+  <script>
+    firebase.functions().useEmulator("localhost", 5001);
+    console.log('About to make a network request!!!');
+    firebase.functions().httpsCallable('getStudents')().then((res) => {
+      console.log('network request is DONE!');
+      console.log(res);
+    });
+  </script>
+</body>
+
+</html>
