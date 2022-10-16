@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css">
-    <title>Messages</title>
+    <link rel="stylesheet" href="create.css">
+    <title>Create</title>
 </head>
 
 <body>
@@ -39,44 +39,30 @@
                             <li><a class="dropdown-item" href="../create.html">Create</a></li>
                             <li><a class="dropdown-item" href="../login.html">Login</a></li>
                             <li><a class="dropdown-item" href="../index.html">Messages</a></li>
+                        </ul>
                     </li>
-                </ul>
-                </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-
     <div class="container">
-        <h1 class="text-center">Messages</h1>
-        <div class="card">
-            <div class="card">
-                <div class="card-header text-center">Messages</div>
-                <div id="messagesBody" class="card-body text-left"></div>
-            </div>
-        </div>
-
-
-        <div class="mb-3 text-center">
-            <label for="exampleFormControlTextarea1" class="form-label">Comments</label>
-            <textarea type="text" class="form-control" id="messages" placeholder="Enter Messages" rows="3"
-                required></textarea>
-        </div>
-
-
+        <h1>Create</h1>
         <form>
-            <div class="mb-3 text-center">
-                <label for="formGroupDisplayName" class="form-label">Enter Display Name Below</label>
-                <input type="text" class="form-control" id="displayName" placeholder="Enter Display Name"
+            <div class="mb-3">
+                <label for="formGroupEmail" class="form-label">E-mail</label>
+                <input type="text" class="form-control" id="theEmail" placeholder="Enter E-mail" required></input>
+            </div>
+            <div class="mb-3">
+                <label for="formGroupPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="thePassword" placeholder="Enter Password"
                     required></input>
             </div>
+            <button onclick="create()" type="button" class="btn btn-primary">Create</button>
         </form>
-        <div class="mb-3 text-center">
-            <button onclick="displayInput()" id="myBtn" type="button" class="btn btn-primary">Send</button>
-            <button onclick="signOut()" id="mySignOut" type="button" class="btn btn-primary">Sign Out</button>
-        </div>
     </div>
+
+
 
 
 
@@ -93,81 +79,56 @@
             appId: "1:65135258726:web:01dd0c00a2b98f3c1591a7"
         };
 
-
         firebase.initializeApp(firebaseConfig);
-
 
         const db = firebase.firestore();
 
 
-        const displayInput = function () {
-
-            const timeStamp = new Date();
-            const newTime = timeStamp.toLocaleTimeString();
-            const displayName = document.getElementById('displayName').value;
-            const theMessage = document.getElementById('messages').value;
-            if (displayName == '') {
-                alert('Display name is required.');
+        // write code here
+        const create = function () {
+            const theEmail = document.getElementById('theEmail').value;
+            const thePassword = document.getElementById('thePassword').value;
+            if (theEmail == '' || thePassword == '') {
+                alert('E-mail and Password is required.');
             } else {
                 const theObjectThatWeAreGoingToSaveToTheDatabase = {
-                    message: theMessage,
-                    timestamp: newTime,
-                    displayName: displayName
+                    password: thePassword,
+                    email: theEmail
                 };
-
-                db.collection("messages").add(theObjectThatWeAreGoingToSaveToTheDatabase)
+                db.collection("users").add(theObjectThatWeAreGoingToSaveToTheDatabase)
                     .then((docRef) => {
                         console.log("Document written with ID: ", docRef.id);
                     })
                     .catch((error) => {
                         console.error("Error adding document: ", error);
                     });
+
+
+                firebase.auth().createUserWithEmailAndPassword(theEmail, thePassword)
+                    .then((userCredential) => {
+                        console.log(userCredential);
+                        // Signed in 
+                        // var user = userCredential.user;
+                        // ...
+                    })
+                    .catch((error) => {
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // ..
+                    });
             }
+
         }
 
-        
-        db.collection("messages").get().then((querySnapshot) => {
-            let paragraphs = '';
-            querySnapshot.forEach((doc) => {
-                const object = doc.data(); //doc.data is the object we are accessing to get our messages
-                paragraphs += '<p>' + object.displayName + ':' + ' ' + object.timestamp + ':' + ' ' + object.message + '</p>';
-                //console.log(object.timestamp);
-            });
-            document.getElementById('messagesBody').innerHTML = paragraphs;
-        });
 
 
-        firebase.auth().onAuthStateChanged((user) => {  //this is a listener!
-            if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
-                let uid = user.uid;
-                alert('Signed in');
-                // ...
-            } else {
-                alert('Not signed in');
-                window.location.href = "../login.html";
-                // User is signed out
-                // ...
-            }
-        });
 
-
-        const signOut = function () {
-            firebase.auth().signOut().then(() => {
-                // Sign-out successful.
-            }).catch((error) => {
-                // An error happened.
-            });
-
-        }
 
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
-        </script>
-
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
 
 </body>
 
